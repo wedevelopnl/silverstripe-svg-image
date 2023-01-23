@@ -32,6 +32,6 @@
         }
     },
     "suggest": {
-        "silverstripe/mimevalidator": "Adds mimetime validation to file uploads."
+        "silverstripe/mimevalidator": "Adds mimetype validation to file uploads."
     }
 }
