@@ -6,4 +6,4 @@ After: '#assetsfieldtypes'
 SilverStripe\Assets\Storage\DBFile:
   supported_images:
     - 'image/svg+xml'
-    - image/svg
+    - 'image/svg'
