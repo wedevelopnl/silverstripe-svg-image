@@ -1,0 +1,12 @@
+---
+Name: silverstripesvgimage-mimevalidator
+After: '#mimevalidator'
+Only:
+  moduleexists: silverstripe/mimevalidator
+---
+
+SilverStripe\MimeValidator\MimeUploadValidator:
+  MimeTypes:
+    svg:
+      - 'image/svg'
+      - 'image/svg+xml'

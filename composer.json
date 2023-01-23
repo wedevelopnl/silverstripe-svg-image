@@ -1,0 +1,37 @@
+{
+    "name": "wedevelopnl/silverstripe-svg-image",
+    "description": "Silverstripe module to add support for SVG images.",
+    "type": "silverstripe-vendormodule",
+    "keywords": [
+        "silverstripe"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [{
+        "name": "WeDevelop",
+        "email": "development@wedevelop.nl"
+    }],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.4",
+        "enshrined/svg-sanitize": "^0.15",
+        "silverstripe/framework": "^4@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "WeDevelop\\SvgImage\\": "src/"
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/installers": false,
+            "silverstripe/vendor-plugin": false
+        }
+    },
+    "suggest": {
+        "silverstripe/mimevalidator": "Adds mimetime validation to file uploads."
+    }
+}

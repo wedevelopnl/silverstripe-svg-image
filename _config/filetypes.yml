@@ -1,0 +1,17 @@
+---
+Name: silverstripesvgimage-assetsfiletypes
+After: '#assetsfiletypes'
+---
+
+SilverStripe\Assets\File:
+  file_types:
+    svg: 'SVG image'
+  allowed_extensions:
+    - svg
+  app_categories:
+    image:
+      - svg
+    image/supported:
+      - svg
+  class_for_file_extension:
+    svg: WeDevelop\SvgImage\Assets\Svg
