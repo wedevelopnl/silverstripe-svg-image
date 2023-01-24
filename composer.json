@@ -15,6 +15,7 @@
     "require": {
         "php": ">=7.4",
         "enshrined/svg-sanitize": "^0.15",
+        "meyfa/php-svg": "^0.14.1",
         "silverstripe/framework": "^4@stable"
     },
     "autoload": {
