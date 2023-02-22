@@ -18,6 +18,7 @@ class MigrateCurrentSvgsTask extends BuildTask
 {
     protected $title = 'Migrate svg files into the svg image file type';
 
+    /** @config */
     private static string $segment = 'migrate-svg-files';
 
     protected $description = 'Migrates svgs stored as the general file type into the new svg image type';

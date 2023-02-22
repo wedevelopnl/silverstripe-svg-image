@@ -5,75 +5,66 @@ declare(strict_types=1);
 namespace WeDevelop\SvgImage\Assets;
 
 use enshrined\svgSanitize\Sanitizer;
+use SilverStripe\Assets\File;
 use SilverStripe\Assets\Image;
+use SilverStripe\Assets\Storage\DBFile;
 use SVG\SVG as SVGParser;
 
 /**
- * Represents a SVG image
+ * Impage type that represends an svg file.
  */
 class Svg extends Image
 {
     /**
      * @config
-     * @var string
      */
-    private static $singular_name = "SVG";
+    private static string $singular_name = "SVG";
 
     /**
      * @config
-     * @var string
      */
-    private static $plural_name = "SVGs";
+    private static string $plural_name = "SVGs";
 
     /**
      * @config
-     * @var bool
      */
-    private static $lazy_loading_enabled = false;
+    private static bool $lazy_loading_enabled = false;
 
     private ?SVGParser $svg = null;
 
-    public function __construct($record = null, $isSingleton = false, $queryParams = [])
+    /**
+     * @param array<mixed> $record
+     * @param array<string, string> $queryParams
+     */
+    public function __construct($record = null, bool $isSingleton = false, array $queryParams = [])
     {
         parent::__construct($record, $isSingleton, $queryParams);
 
-        if ($this->File && $this->File->getString() !== null) {
+        if ($this->File->exists()) {
             $this->svg = SVGParser::fromString($this->File->getString());
         }
     }
 
-    public function onBeforeWrite()
+    public function onBeforeWrite(): void
     {
         $svgSanitiser = new Sanitizer();
         $this->File->setFromString($svgSanitiser->sanitize($this->File->getString()), $this->File->getFilename());
         parent::onBeforeWrite();
     }
 
-    public function getTag()
+    public function getTag(): string
     {
-        return $this->File ? $this->File->getString() : '';
+        return $this->File->exists() ? $this->File->getString() : '';
     }
 
-    /**
-     * @return int|string
-     */
-    public function getWidth()
+    public function getWidth(): int
     {
-        if ($this->svg) {
-            return $this->svg->getDocument()->getWidth();
-        }
-        return 0;
+        return $this->svg ? intval($this->svg->getDocument()->getWidth()) : 0;
     }
 
-    /**
-     * @return int|string
-     */
-    public function getHeight()
+    public function getHeight(): int
     {
-        if ($this->svg) {
-            return $this->svg->getDocument()->getHeight();
-        }
-        return 0;
+        return $this->svg ? intval($this->svg->getDocument()->getHeight()) : 0;
     }
 
     /**
@@ -85,7 +76,7 @@ class Svg extends Image
      * SVGs can be manipulated through CSS if needed for now. If anyone feels like it
      * they are free to implement image manipluation though ;).
      */
-    public function manipulate($variant, $callback)
+    public function manipulate($variant, $callback): DBFile
     {
         return $this->File;
     }

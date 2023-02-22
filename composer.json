@@ -24,7 +24,9 @@
         }
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.4"
+        "friendsofphp/php-cs-fixer": "^3.4",
+        "syntro/silverstripe-phpstan": "^1.0",
+        "silverstripe/mimevalidator": "^2.4"
     },
     "config": {
         "allow-plugins": {
