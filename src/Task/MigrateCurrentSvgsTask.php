@@ -23,7 +23,7 @@ class MigrateCurrentSvgsTask extends BuildTask
 
     protected $description = 'Migrates svgs stored as the general file type into the new svg image type';
 
-    public function run($request)
+    public function run($request): void
     {
         SQLUpdate::create('file', ['ClassName' => Svg::class], ['Name LIKE ?' => '%.svg'])->execute();
     }

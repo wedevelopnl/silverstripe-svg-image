@@ -11,23 +11,17 @@ use SilverStripe\Assets\Storage\DBFile;
 use SVG\SVG as SVGParser;
 
 /**
- * Impage type that represends an svg file.
+ * Image type that represends an svg file.
  */
 class Svg extends Image
 {
-    /**
-     * @config
-     */
+    /** @config */
     private static string $singular_name = "SVG";
 
-    /**
-     * @config
-     */
+    /** @config */
     private static string $plural_name = "SVGs";
 
-    /**
-     * @config
-     */
+    /** @config */
     private static bool $lazy_loading_enabled = false;
 
     private ?SVGParser $svg = null;
