@@ -25,6 +25,6 @@ class MigrateCurrentSvgsTask extends BuildTask
 
     public function run($request): void
     {
-        SQLUpdate::create('file', ['ClassName' => Svg::class], ['Name LIKE ?' => '%.svg'])->execute();
+        SQLUpdate::create('File', ['ClassName' => Svg::class], ['Name LIKE ?' => '%.svg'])->execute();
     }
 }
