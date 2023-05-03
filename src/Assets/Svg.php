@@ -28,9 +28,10 @@ class Svg extends Image
 
     /**
      * @param array<mixed> $record
+     * @param bool|int $isSingleton
      * @param array<string, string> $queryParams
      */
-    public function __construct($record = null, bool $isSingleton = false, array $queryParams = [])
+    public function __construct($record = null, $isSingleton = false, array $queryParams = [])
     {
         parent::__construct($record, $isSingleton, $queryParams);
 
