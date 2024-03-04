@@ -36,7 +36,9 @@ class Svg extends Image
         parent::__construct($record, $isSingleton, $queryParams);
 
         if ($this->File->exists()) {
-            $this->svg = SVGParser::fromString($this->File->getString());
+            try {
+                $this->svg = SVGParser::fromString($this->File->getString());
+            } catch (\Exception $e) {}
         }
     }
 
