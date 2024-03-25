@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method WeDevelop\\\\SvgImage\\\\Assets\\\\Svg\\:\\:__construct\\(\\) has parameter \\$queryParams with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Assets/Svg.php

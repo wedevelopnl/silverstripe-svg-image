@@ -8,3 +8,4 @@ parameters:
 
 includes:
     - vendor/syntro/silverstripe-phpstan/phpstan.neon
+    - phpstan-baseline.neon

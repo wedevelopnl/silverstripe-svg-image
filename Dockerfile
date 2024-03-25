@@ -1,6 +1,6 @@
 ARG ALPINE_VERSION=3.16
 
-FROM php:7.4-cli-alpine$ALPINE_VERSION AS php-cli
+FROM php:8.1-cli-alpine$ALPINE_VERSION AS php-cli
 
 RUN apk add php make perl icu-dev --no-cache
 RUN docker-php-ext-install intl
