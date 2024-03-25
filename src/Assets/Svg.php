@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace WeDevelop\SvgImage\Assets;
 
 use enshrined\svgSanitize\Sanitizer;
-use SilverStripe\Assets\File;
+use Psr\Log\LoggerInterface;
 use SilverStripe\Assets\Image;
 use SilverStripe\Assets\Storage\DBFile;
 use SVG\SVG as SVGParser;
@@ -26,24 +26,37 @@ class Svg extends Image
 
     private ?SVGParser $svg = null;
 
+    public LoggerInterface $logger;
+
+    /**
+     * @config
+     * @var array<string, string>
+     */
+    private static array $dependencies = [
+        'logger' => '%$' . LoggerInterface::class,
+    ];
+
     /**
      * @param array<mixed> $record
      * @param bool|int $isSingleton
-     * @param array<string, string> $queryParams
      */
-    public function __construct($record = null, $isSingleton = false, array $queryParams = [])
+    public function __construct($record = null, $isSingleton = false, $queryParams = [])
     {
         parent::__construct($record, $isSingleton, $queryParams);
 
         if ($this->File->exists()) {
-            $this->svg = SVGParser::fromString($this->File->getString());
+            try {
+                $this->svg = SVGParser::fromString($this->File->getString());
+            } catch (\Exception $e) {
+                $this->logger->error($e->getMessage());
+            }
         }
     }
 
     public function onBeforeWrite(): void
     {
         $svgSanitiser = new Sanitizer();
-        $this->File->setFromString($svgSanitiser->sanitize($this->File->getString()), $this->File->getFilename());
+        $this->File->setFromString($svgSanitiser->sanitize($this->File->getString()) ?: '', $this->File->getFilename());
         parent::onBeforeWrite();
     }
 
