@@ -16,10 +16,13 @@ use SVG\SVG as SVGParser;
 class Svg extends Image
 {
     /** @config */
-    private static string $singular_name = "SVG";
+    private static string $table_name = 'WeDevelop_SvgImage_Svg';
 
     /** @config */
-    private static string $plural_name = "SVGs";
+    private static string $singular_name = 'SVG';
+
+    /** @config */
+    private static string $plural_name = 'SVGs';
 
     /** @config */
     private static bool $lazy_loading_enabled = false;
@@ -37,10 +40,11 @@ class Svg extends Image
     ];
 
     /**
-     * @param array<mixed> $record
+     * @param array<mixed>|null $record
      * @param bool|int $isSingleton
+     * @param array<string, mixed> $queryParams
      */
-    public function __construct($record = null, $isSingleton = false, $queryParams = [])
+    public function __construct(mixed $record = null, mixed $isSingleton = false, mixed $queryParams = [])
     {
         parent::__construct($record, $isSingleton, $queryParams);
 
