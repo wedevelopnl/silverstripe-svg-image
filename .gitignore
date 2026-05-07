@@ -2,4 +2,6 @@
 /.vscode
 /vendor
 /composer.lock
-/.php-cs-fixer.cache
+.docker/.env
+.phpunit.cache
+coverage
