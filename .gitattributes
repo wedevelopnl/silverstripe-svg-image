@@ -1,12 +1,10 @@
 # Exclude development files from Composer package distribution
+/.docker            export-ignore
 /.github            export-ignore
-/dev                export-ignore
+/.vscode            export-ignore
 /docs               export-ignore
+/tests              export-ignore
 .gitattributes      export-ignore
 .gitignore          export-ignore
-.php-cs-fixer.php   export-ignore
-compose.yaml        export-ignore
 contributing.md     export-ignore
-Dockerfile          export-ignore
 Makefile            export-ignore
-phpstan.neon        export-ignore
