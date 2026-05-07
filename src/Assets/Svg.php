@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WeDevelop\SvgImage\Assets;
 
+use Exception;
+use Override;
 use enshrined\svgSanitize\Sanitizer;
 use Psr\Log\LoggerInterface;
 use SilverStripe\Assets\Image;
@@ -29,6 +31,8 @@ class Svg extends Image
 
     private ?SVGParser $svg = null;
 
+    private bool $svgParsed = false;
+
     public LoggerInterface $logger;
 
     /**
@@ -39,44 +43,59 @@ class Svg extends Image
         'logger' => '%$' . LoggerInterface::class,
     ];
 
-    /**
-     * @param array<mixed>|null $record
-     * @param bool|int $isSingleton
-     * @param array<string, mixed> $queryParams
-     */
-    public function __construct(mixed $record = null, mixed $isSingleton = false, mixed $queryParams = [])
-    {
-        parent::__construct($record, $isSingleton, $queryParams);
-
-        if ($this->File->exists()) {
-            try {
-                $this->svg = SVGParser::fromString($this->File->getString());
-            } catch (\Exception $e) {
-                $this->logger->error($e->getMessage());
-            }
-        }
-    }
-
+    #[Override]
     public function onBeforeWrite(): void
     {
-        $svgSanitiser = new Sanitizer();
-        $this->File->setFromString($svgSanitiser->sanitize($this->File->getString()) ?: '', $this->File->getFilename());
+        $filename = $this->File->getFilename();
+        if ($filename !== null && $this->File->exists()) {
+            $svgSanitiser = new Sanitizer();
+            $this->File->setFromString($svgSanitiser->sanitize($this->File->getString()) ?: '', $filename);
+        }
+
         parent::onBeforeWrite();
     }
 
+    #[Override]
     public function getTag(): string
     {
         return $this->File->exists() ? $this->File->getString() : '';
     }
 
+    #[Override]
     public function getWidth(): int
     {
-        return $this->svg ? intval($this->svg->getDocument()->getWidth()) : 0;
+        $this->parseSvg();
+
+        return $this->svg instanceof SVGParser ? intval($this->svg->getDocument()->getWidth()) : 0;
     }
 
+    #[Override]
     public function getHeight(): int
     {
-        return $this->svg ? intval($this->svg->getDocument()->getHeight()) : 0;
+        $this->parseSvg();
+
+        return $this->svg instanceof SVGParser ? intval($this->svg->getDocument()->getHeight()) : 0;
+    }
+
+    // Deferred until first access so the framework has injected $logger via $dependencies
+    // by the time we try to log a parse failure.
+    private function parseSvg(): void
+    {
+        if ($this->svgParsed) {
+            return;
+        }
+
+        $this->svgParsed = true;
+
+        if (!$this->File->exists()) {
+            return;
+        }
+
+        try {
+            $this->svg = SVGParser::fromString($this->File->getString());
+        } catch (Exception $e) {
+            $this->logger->error($e->getMessage());
+        }
     }
 
     /**
@@ -88,7 +107,8 @@ class Svg extends Image
      * SVGs can be manipulated through CSS if needed for now. If anyone feels like it
      * they are free to implement image manipluation though ;).
      */
-    public function manipulate($variant, $callback): DBFile
+    #[Override]
+    public function manipulate(mixed $variant, mixed $callback): DBFile
     {
         return $this->File;
     }
