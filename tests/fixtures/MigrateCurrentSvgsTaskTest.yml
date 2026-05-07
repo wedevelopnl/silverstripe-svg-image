@@ -1,0 +1,17 @@
+SilverStripe\Assets\File:
+  iconA:
+    Name: 'logo.svg'
+    FileFilename: 'logo.svg'
+    FileHash: '0000000000000000000000000000000000000000'
+  iconB:
+    Name: 'badge.svg'
+    FileFilename: 'badge.svg'
+    FileHash: '0000000000000000000000000000000000000001'
+  photo:
+    Name: 'photo.png'
+    FileFilename: 'photo.png'
+    FileHash: '0000000000000000000000000000000000000002'
+  document:
+    Name: 'manual.pdf'
+    FileFilename: 'manual.pdf'
+    FileHash: '0000000000000000000000000000000000000003'
