@@ -2,8 +2,13 @@
 
 declare(strict_types=1);
 
+namespace WeDevelop\SvgImage\Task;
+
 use SilverStripe\Dev\BuildTask;
 use SilverStripe\ORM\Queries\SQLUpdate;
+use SilverStripe\PolyExecution\PolyOutput;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 use WeDevelop\SvgImage\Assets\Svg;
 
 /**
@@ -16,15 +21,17 @@ use WeDevelop\SvgImage\Assets\Svg;
  */
 class MigrateCurrentSvgsTask extends BuildTask
 {
-    protected $title = 'Migrate svg files into the svg image file type';
+    protected string $title = 'Migrate svg files into the svg image file type';
+
+    protected static string $description = 'Migrates svgs stored as the general file type into the new svg image type';
 
     /** @config */
-    private static string $segment = 'migrate-svg-files';
+    protected static string $commandName = 'migrate-svg-files';
 
-    protected $description = 'Migrates svgs stored as the general file type into the new svg image type';
-
-    public function run($request): void
+    protected function execute(InputInterface $input, PolyOutput $output): int
     {
-        SQLUpdate::create('File', ['ClassName' => Svg::class], ['Name LIKE ?' => '%.svg'])->execute();
+        SQLUpdate::create('"File"', ['"ClassName"' => Svg::class], ['"Name" LIKE ?' => '%.svg'])->execute();
+
+        return Command::SUCCESS;
     }
 }
