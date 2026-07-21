@@ -90,6 +90,6 @@ class Svg extends Image
      */
     public function manipulate($variant, $callback): DBFile
     {
-        return $this->File;
+        return (clone $this->File)->setOriginal($this);
     }
 }
