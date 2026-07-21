@@ -88,9 +88,15 @@ class SvgTest extends SapphireTest
     {
         $svg = $this->writeSvg($this->loadFixture('sample.svg'), 'manipulate.svg');
 
-        $result = $svg->manipulate('any-variant', static fn (): mixed => null);
+        $result = $svg->manipulate('any-variant', static fn (): mixed => self::fail('manipulate() must not invoke the manipulation callback'));
 
-        $this->assertSame($svg->File, $result);
+        // A clone is returned so the record's own DBFile instance is never customised;
+        // setOriginal() attaches the record as failover, which templates rely on.
+        $this->assertNotSame($svg->File, $result);
+        $this->assertSame($svg, $result->getFailover());
+        $this->assertSame($svg->File->getFilename(), $result->getFilename());
+        $this->assertSame($svg->File->getHash(), $result->getHash());
+        $this->assertSame($svg->File->getVariant(), $result->getVariant());
     }
 
     public function testOnBeforeWriteSanitizesUnsafeContent(): void
