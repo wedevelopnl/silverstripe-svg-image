@@ -110,6 +110,6 @@ class Svg extends Image
     #[Override]
     public function manipulate(mixed $variant, mixed $callback): DBFile
     {
-        return $this->File;
+        return (clone $this->File)->setOriginal($this);
     }
 }
