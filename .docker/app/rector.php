@@ -8,6 +8,7 @@ use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodingStyle\Rector\PostInc\PostIncDecToPreIncDecRector;
 use Rector\Config\RectorConfig;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\AddSeeTestAnnotationRector;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -27,6 +28,8 @@ return RectorConfig::configure()
         SilverstripeLevelSetList::UP_TO_SS_6_0,
     ])
     ->withSkip([
+        // tests/ is export-ignored, so a @see pointing at a test class dangles in every published install
+        AddSeeTestAnnotationRector::class,
         ChangeOrIfContinueToMultiContinueRector::class,
         FlipTypeControlToUseExclusiveTypeRector::class,
         PostIncDecToPreIncDecRector::class,
