@@ -9,6 +9,13 @@ version follows the supported Silverstripe major version.
 This changelog starts at 6.0.0. For earlier versions, see the
 [GitHub releases](https://github.com/wedevelopnl/silverstripe-svg-image/releases).
 
+## [6.0.1] - 2026-10-01
+
+### Fixed
+
+- Requires `meyfa/php-svg` ^0.16.1, which removes the "Implicitly marking parameter `$index` as
+  nullable is deprecated" notice raised on PHP 8.4 and newer.
+
 ## [6.0.0] - 2026-10-01
 
 ### Changed
@@ -32,4 +39,5 @@ This changelog starts at 6.0.0. For earlier versions, see the
 - `MigrateCurrentSvgsTask` quotes its table and column identifiers, so it also works on databases
   that need ANSI-quoted identifiers.
 
+[6.0.1]: https://github.com/wedevelopnl/silverstripe-svg-image/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/wedevelopnl/silverstripe-svg-image/compare/2.1.1...6.0.0
