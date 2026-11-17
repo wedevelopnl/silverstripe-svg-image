@@ -9,6 +9,16 @@ version follows the supported Silverstripe major version.
 This changelog starts at 6.0.0. For earlier versions, see the
 [GitHub releases](https://github.com/wedevelopnl/silverstripe-svg-image/releases).
 
+## [6.0.2] - 2026-11-17
+
+### Security
+
+- Requires `enshrined/svg-sanitize` ^1.1.1, which fixes a stored XSS through a DTD entity that
+  collides with a named character reference (GHSA-9rjx-3jch-6vjf) and two denial-of-service
+  issues in the sanitiser (GHSA-m9xh-6747-9r6f, GHSA-v383-3rw5-q8rf). The 0.22 line this module
+  required before has no fix. The sanitiser's API is unchanged; SVGs are sanitised on write, so
+  files uploaded earlier are only re-sanitised when they are saved again.
+
 ## [6.0.1] - 2026-10-01
 
 ### Fixed
@@ -39,5 +49,6 @@ This changelog starts at 6.0.0. For earlier versions, see the
 - `MigrateCurrentSvgsTask` quotes its table and column identifiers, so it also works on databases
   that need ANSI-quoted identifiers.
 
+[6.0.2]: https://github.com/wedevelopnl/silverstripe-svg-image/compare/6.0.1...6.0.2
 [6.0.1]: https://github.com/wedevelopnl/silverstripe-svg-image/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/wedevelopnl/silverstripe-svg-image/compare/2.1.1...6.0.0
